@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Form</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    form { max-width: 300px; }
+    input { display: block; margin: 10px 0; padding: 8px; width: 100%; }
+    button { padding: 10px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Enter Your Details</h2>
+  <form id="userForm">
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="number" id="age" placeholder="Age" required>
+    <input type="text" id="city" placeholder="City" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    document.getElementById("userForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        age: document.getElementById("age").value,
+        city: document.getElementById("city").value
+      };
+
+      // Send data to backend
+      const response = await fetch("http://192.168.0.164:50000/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    });
+  </script>
+</body>
+</html>
